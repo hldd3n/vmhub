@@ -4,7 +4,12 @@ import { LoginComponent } from './components/login/login.component';
 
 
 const routes: Routes = [
-    { path: '', component: LoginComponent, pathMatch: 'full' }
+    { path: '', component: LoginComponent, pathMatch: 'full' },
+    { path: 'home', redirectTo: ''},
+    // { path: 'not-found', component: NotFoundComponent },
+    { path: 'list', loadChildren: './components/components.module#ComponentsModule'},
+
+    // {path: '**', redirectTo:'/not-found', pathMatch: 'full'}
 ];
 
 
