@@ -1,0 +1,9 @@
+$module: 'repository-list';
+
+.#{$module} {
+
+    &__pinned-repos-datagrid {
+        margin: 1.2rem;
+        height: inherit;
+    }
+}
