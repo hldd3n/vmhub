@@ -5,21 +5,23 @@ import { LoginComponent } from './login/login.component';
 import { RepositoryListComponent } from './repository/repository-list/repository-list.component';
 import { RepositoryDetailsComponent } from './repository/repository-details/repository-details.component';
 import { ComponentsRoutingModule } from './components-routing.module';
+import { HeaderComponent } from './header/header.component';
+import { RepositoryCommitsComponent } from './repository/repository-commits/repository-commits.component';
 
 
 
 @NgModule({
     declarations: [
-        LoginComponent,
         RepositoryListComponent,
         RepositoryDetailsComponent,
+        HeaderComponent,
+        RepositoryCommitsComponent,
     ],
     imports: [
         SharedModule,
         ComponentsRoutingModule,
     ],
     exports: [
-        LoginComponent,
         RepositoryListComponent,
         RepositoryDetailsComponent,
         ComponentsRoutingModule
