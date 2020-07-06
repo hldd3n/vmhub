@@ -7,6 +7,8 @@ import { RepositoryDetailsComponent } from './repository/repository-details/repo
 import { ComponentsRoutingModule } from './components-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { RepositoryCommitsComponent } from './repository/repository-commits/repository-commits.component';
+import { ServicesModule } from '../services/services.module';
+import { SubscribedComponent } from './shared/subscribed.component';
 
 
 
@@ -16,15 +18,18 @@ import { RepositoryCommitsComponent } from './repository/repository-commits/repo
         RepositoryDetailsComponent,
         HeaderComponent,
         RepositoryCommitsComponent,
+        SubscribedComponent,
     ],
     imports: [
         SharedModule,
         ComponentsRoutingModule,
+        ServicesModule,
     ],
     exports: [
         RepositoryListComponent,
         RepositoryDetailsComponent,
-        ComponentsRoutingModule
+        ComponentsRoutingModule,
+        SubscribedComponent,
     ],
 })
 export class ComponentsModule { }
