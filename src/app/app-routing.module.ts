@@ -4,11 +4,10 @@ import { LoginComponent } from './components/login/login.component';
 
 
 const routes: Routes = [
-    { path: '', component: LoginComponent, pathMatch: 'full' },
-    { path: 'home', redirectTo: '' },
+    { path: 'auth', component: LoginComponent, pathMatch: 'full' },
     // { path: 'not-found', component: NotFoundComponent },
-    { path: 'repositories', loadChildren: () => import(`./components/components.module`).then(module => module.ComponentsModule) },
-
+    { path: 'vmware', loadChildren: () => import(`./components/components.module`).then(module => module.ComponentsModule) },
+    { path: '', redirectTo: 'vmware', pathMatch: 'full'},
     // {path: '**', redirectTo:'/not-found', pathMatch: 'full'}
 ];
 

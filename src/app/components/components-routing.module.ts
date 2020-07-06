@@ -9,14 +9,11 @@ const routes: Routes = [{
     path: '', component: HeaderComponent,
     children: [{
         path: 'repositories', component: RepositoryListComponent,
-        children: [
-            {
-                path:'repositories/:name', component: RepositoryDetailsComponent,
-                children: [{
-                    path:'commits', component: RepositoryCommitsComponent,
-                }]
-            }
-        ]
+    }, {
+        path: 'repositories/:name', component: RepositoryDetailsComponent,
+        children: [{
+            path: 'repositories/:name/commits', component: RepositoryCommitsComponent,
+        }]
     }, {
         path: '', redirectTo: 'repositories', pathMatch: 'full',
     }],

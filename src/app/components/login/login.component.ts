@@ -16,6 +16,6 @@ export class LoginComponent implements OnInit {
     }
 
     public login() {
-        this.router.navigate(['list']);
+        this.router.navigate(['vmware']);
     }
 }
