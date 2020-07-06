@@ -5,9 +5,9 @@ import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent, pathMatch: 'full' },
-    { path: 'home', redirectTo: ''},
+    { path: 'home', redirectTo: '' },
     // { path: 'not-found', component: NotFoundComponent },
-    { path: 'list', loadChildren: './components/components.module#ComponentsModule'},
+    { path: 'repositories', loadChildren: () => import(`./components/components.module`).then(module => module.ComponentsModule) },
 
     // {path: '**', redirectTo:'/not-found', pathMatch: 'full'}
 ];
@@ -16,7 +16,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+        RouterModule.forRoot(routes)
     ],
     exports: [RouterModule]
 })

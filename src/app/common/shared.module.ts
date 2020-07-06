@@ -9,14 +9,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [],
   imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
     CommonModule,
     ClarityModule,
   ],
   exports: [
-    BrowserAnimationsModule,
-    BrowserModule,
     CommonModule,
     ClarityModule,
   ]
