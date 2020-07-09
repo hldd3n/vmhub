@@ -9,6 +9,7 @@ import { HeaderComponent } from './header/header.component';
 import { RepositoryCommitsComponent } from './repository/repository-commits/repository-commits.component';
 import { ServicesModule } from '../services/services.module';
 import { SubscribedComponent } from './shared/subscribed.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 
@@ -21,6 +22,8 @@ import { SubscribedComponent } from './shared/subscribed.component';
         SubscribedComponent,
     ],
     imports: [
+        ReactiveFormsModule,
+        FormsModule,
         SharedModule,
         ComponentsRoutingModule,
         ServicesModule,
