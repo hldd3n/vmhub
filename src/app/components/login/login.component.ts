@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
     public login() {
         this.authService.loginUser(this.loginForm.value).subscribe(
-            (result) => document.location.href = result
+            (result) => document.location.href = result.redirectUrl
         )
     }
 }

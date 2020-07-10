@@ -1,17 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { RequesterService } from '../requester.service';
 import { UserModel } from '../../models/user.model';
 import { tap } from 'rxjs/operators';
 import { API, ENDPOINTS } from '../../constants/endpoints';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+
+import * as jwt_decode from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
+    private readonly isLoggedInSubject$ = new BehaviorSubject<boolean>(
+        this.hasCookie()
+    );
+
     constructor(
-        private readonly requester: RequesterService
+        private readonly requester: RequesterService,
+        private readonly cookieService: CookieService,
     ) { }
+
+    public get isAuthenticated$(): Observable<boolean> {
+        return this.isLoggedInSubject$.asObservable()
+    }
 
     public registerUser(user: UserModel) {
         return this.requester.post(
@@ -21,14 +36,41 @@ export class AuthService {
     }
 
     public loginUser(user: UserModel) {
-        console.log(user);
         return this.requester.post(
             `${API.ROOT}${ENDPOINTS.USER_LOGIN}`,
-            user
+            user,
+            { withCredentials: true }
         ).pipe(
             tap((response) => {
                 console.log(response);
             })
         );
+    }
+
+    public logout(): void {
+        this.cookieService.deleteAll('/');
+    }
+
+    public getUsername(): string {
+        const decodedToken = this.getDecodedToken(this.getCookieValue('X-VMNEST-TOKEN'))
+        return decodedToken.username;
+    }
+
+    private hasCookie() {
+        const hasLocalCookie = !!this.cookieService.get('X-VMNEST-TOKEN');
+        const hasGithubCookie = !!this.cookieService.get('X-GITHUB-TOKEN');
+        return hasLocalCookie && hasGithubCookie;
+    }
+
+    private getCookieValue(cookieName: string) {
+        return this.cookieService.get(cookieName);
+    }
+
+    private getDecodedToken(token: string) {
+        try {
+            return jwt_decode(token);
+        } catch (Error) {
+            return null;
+        }
     }
 }

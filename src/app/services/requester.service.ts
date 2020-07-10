@@ -14,8 +14,8 @@ export class RequesterService {
     public post(
         url: string,
         body: any,
-        headers?: HttpHeaders
+        options?,
     ): Observable<any> {
-        return this.http.post<any>(url, body, { headers });
+        return this.http.post<any>( url, body, options );
     }
 }
