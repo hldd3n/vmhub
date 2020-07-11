@@ -1,18 +1,31 @@
-{
-    repositoryOwner(login: "vmware") {
+query getPinnedRepositories(
+    $login: String = "vmware",
+    $reposCount: Int = 5,
+    $objectExpression: String = "master:README.md"
+    $commitsTarget: String = "master"
+    $commitsCouont: Int = 100,
+    $releasesCount: Int = 5,
+    $branchesCount: Int = 5, 
+    ) {
+    repositoryOwner(login: $login) {
         ... on ProfileOwner {
-            pinnedItems(first:20) {
+            pinnedItems(first: $reposCount) {
                 nodes {
                     ... on Repository {
+                        object(expression: $objectExpression) {
+                            ... on Blob {
+                            text
+                        }
+                        }
                         name,
                         licenseInfo {
                           name,
                           description,
                         }
-                        ref(qualifiedName: "master") {
+                        ref(qualifiedName: $commitsTarget) {
                             target {
                                 ... on Commit {
-                                    history(first: 5) {
+                                    history(first: $commitsCouont) {
                                         totalCount
                                         pageInfo {
                                             hasNextPage
@@ -34,12 +47,12 @@
                                 }
                             }
                         }
-                        releases(first:5 ,orderBy: {field: CREATED_AT, direction: DESC}) {
+                        releases(first: $releasesCount ,orderBy: {field: CREATED_AT, direction: DESC}) {
                             nodes {
                                 name
                             }
                         }
-                        refs(first: 5, refPrefix: "refs/heads/") {
+                        refs(first: $branchesCount, refPrefix: "refs/heads/") {
                             nodes {
                                 name
                             }

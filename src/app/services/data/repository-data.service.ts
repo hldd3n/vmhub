@@ -5,14 +5,14 @@ import { getPinnedRepositories } from './graphql';
 import { RequesterService } from '../requester.service';
 
 @Injectable()
-export class RepositoryDataService { 
+export class RepositoryDataService {
     constructor (
         private readonly graphqlService: GraphqlService,
         private readonly requesterService: RequesterService,
     ) { }
 
     public getPinnedRepositoriesRawData(login: string): Observable<any> {
-        return this.graphqlService.query(getPinnedRepositories);
+        return this.graphqlService.query(getPinnedRepositories, { login });
     }
 
     public getContributersPerRepo(repoName: string) {

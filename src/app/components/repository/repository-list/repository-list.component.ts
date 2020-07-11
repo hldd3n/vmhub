@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, takeUntil } from 'rxjs/operators';
-import { RepositoryService, IRepository } from '../../../services/repository/repository.service';
+import { RepositoryService, } from '../../../services/repository/repository.service';
 import { SubscribedComponent } from '../../shared/subscribed.component';
 import { ClrDatagridSortOrder } from '@clr/angular';
+import { IRepository } from '../../../common/interfaces/repository.interface';
 
 @Component({
     selector: 'app-repository-list',
@@ -29,6 +29,6 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
 
     public handleRowClick(repository): void {
         console.log(repository.name);
-        this.router.navigate(['repositories', `${repository.name}`])
+        this.router.navigate(['repositories', `${repository.name}`, {state: {data: {repository}}}])
     }
 }
