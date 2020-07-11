@@ -5,15 +5,21 @@ import { AuthService } from './auth/auth.service';
 import { RequesterService } from './requester.service';
 import { AuthRouteActivatorService } from './guards/auth-route-activator.service';
 import { CookieService } from 'ngx-cookie-service'
+import { GraphqlService } from './data/base/graphql.service';
+import { RepositoryDetailsComponent } from '../components/repository/repository-details/repository-details.component';
+import { RepositoryDataService } from './data/repository-data.service';
 
 @NgModule({
     imports: [],
     providers: [
         CookieService,
         RepositoryService,
+        RepositoryDataService,
         AuthService,
         RequesterService,
+        RepositoryDetailsComponent,
         AuthRouteActivatorService,
+        GraphqlService,
     ]
 })
 export class ServicesModule { }

@@ -1,0 +1,52 @@
+{
+    repositoryOwner(login: "vmware") {
+        ... on ProfileOwner {
+            pinnedItems(first:20) {
+                nodes {
+                    ... on Repository {
+                        name,
+                        licenseInfo {
+                          name,
+                          description,
+                        }
+                        ref(qualifiedName: "master") {
+                            target {
+                                ... on Commit {
+                                    history(first: 5) {
+                                        totalCount
+                                        pageInfo {
+                                            hasNextPage
+                                            endCursor
+                                        }
+                                        edges {
+                                            node {
+                                                messageHeadline,
+                                                pushedDate,
+                                                committer {
+                                                    user {
+                                                        login
+                                                    }
+                                                }
+                                                resourcePath,
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        releases(first:5 ,orderBy: {field: CREATED_AT, direction: DESC}) {
+                            nodes {
+                                name
+                            }
+                        }
+                        refs(first: 5, refPrefix: "refs/heads/") {
+                            nodes {
+                                name
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

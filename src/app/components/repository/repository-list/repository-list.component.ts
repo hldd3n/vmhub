@@ -30,7 +30,7 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
                 this.componentDestroyed$
             ))
             .subscribe((repositories) => {
-                this.repositories = [...repositories];
+                console.log(repositories);
             });
     }
 

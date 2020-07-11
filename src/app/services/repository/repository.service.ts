@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
+import { RepositoryDataService } from '../data/repository-data.service';
 
 const repositories = [[{
     name: 'FirstRepo',
@@ -21,9 +22,10 @@ const repositories = [[{
 export class RepositoryService {
 
     constructor(
+        private readonly repositoryDataService: RepositoryDataService,
     ) { }
 
     public getRepositories(): Observable<any> {
-        return from(repositories);
+        return this.repositoryDataService.getPinnedRepositories('vmware');
     }
 }
