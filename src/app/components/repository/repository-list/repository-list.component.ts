@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
-import { RepositoryService } from '../../../services/repository/repository.service';
+import { RepositoryService, IRepository } from '../../../services/repository/repository.service';
 import { SubscribedComponent } from '../../shared/subscribed.component';
 import { ClrDatagridSortOrder } from '@clr/angular';
 
@@ -12,7 +12,7 @@ import { ClrDatagridSortOrder } from '@clr/angular';
 })
 export class RepositoryListComponent extends SubscribedComponent implements OnInit {
 
-    public repositories: any[] = []
+    public repositories: IRepository[] = []
     public sort = ClrDatagridSortOrder.DESC;
 
     constructor(
@@ -23,15 +23,8 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
         super()
      }
 
-    ngOnInit(): void {
-        this.repositoryService
-            .getRepositories()
-            .pipe(takeUntil(
-                this.componentDestroyed$
-            ))
-            .subscribe((repositories) => {
-                console.log(repositories);
-            });
+    async ngOnInit(): Promise<void> {
+        this.repositories = await this.repositoryService.getRepositories()
     }
 
     public handleRowClick(repository): void {

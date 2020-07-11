@@ -24,12 +24,12 @@
             <clr-dg-row 
                 *clrDgItems="let repository of repositories"
                 (click)=handleRowClick(repository)>
-                    <clr-dg-cell>{{repository.name}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository.license}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository.commits}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository.contributors}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository.releases}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository.branches}}</clr-dg-cell>
+                    <clr-dg-cell>{{repository?.name}}</clr-dg-cell>
+                    <clr-dg-cell>{{repository?.license?.name}}</clr-dg-cell>
+                    <clr-dg-cell>{{repository?.commitsCount}}</clr-dg-cell>
+                    <clr-dg-cell>{{repository?.contributors}}</clr-dg-cell>
+                    <clr-dg-cell>{{repository?.releases.join('; \n')}}</clr-dg-cell>
+                    <clr-dg-cell>{{repository?.branches}}</clr-dg-cell>
             </clr-dg-row>
 
             <clr-dg-footer>
