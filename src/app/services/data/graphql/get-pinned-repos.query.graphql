@@ -1,7 +1,9 @@
 query getPinnedRepositories(
     $login: String = "vmware",
     $reposCount: Int = 5,
-    $objectExpression: String = "master:README.md"
+    $readmeMdExpression: String = "master:README.md"
+    $readmeRstExpression: String = "master:README.rst"
+
     $commitsTarget: String = "master"
     $commitsCouont: Int = 100,
     $releasesCount: Int = 5,
@@ -12,10 +14,15 @@ query getPinnedRepositories(
             pinnedItems(first: $reposCount) {
                 nodes {
                     ... on Repository {
-                        object(expression: $objectExpression) {
+                        readmeMd: object(expression: $readmeMdExpression) {
                             ... on Blob {
                             text
+                            }
                         }
+                        readmeRst: object(expression: $readmeRstExpression) {
+                            ... on Blob {
+                            text
+                            }
                         }
                         name,
                         licenseInfo {

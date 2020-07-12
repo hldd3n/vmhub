@@ -1,6 +1,9 @@
 export interface IRepositoryRawData {
     name: string,
-    object: {
+    readmeMd: {
+        text: string
+    },
+    readmeRst: {
         text: string
     },
     licenseInfo: {

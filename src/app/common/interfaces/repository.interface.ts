@@ -1,6 +1,7 @@
 export interface IRepository {
     name: string,
-    readme: string,
+    readmeMd: string,
+    readmeRst: string,
     license: IRepositoryLicense,
     contributors: IContributor[],
     commitsCount: number;

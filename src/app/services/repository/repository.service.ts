@@ -2,12 +2,16 @@ import { Injectable } from '@angular/core';
 import { RepositoryDataService } from '../data/repository-data.service';
 import { IRepositoryCommit, IRepository } from '../../common/interfaces/repository.interface';
 import { IRepositoryRawData, IRawCommit, IRawName } from '../../common/interfaces/repository-raw.interface';
+import { Subject, ReplaySubject } from 'rxjs';
 
 @Injectable()
 export class RepositoryService {
     constructor(
         private readonly repositoryDataService: RepositoryDataService,
     ) { }
+
+    public readonly selectedRepository$ = new ReplaySubject<IRepository>(1)
+
     public async getRepositories(): Promise<IRepository[]> {
         const repositoriesRaw = await this.getRawRepositories()
 
@@ -18,7 +22,8 @@ export class RepositoryService {
         const repositoriesWithoutContributors: IRepository[] = repositoriesRaw.map((node: IRepositoryRawData) => {
             const repository: IRepository = {} as IRepository;
             repository.name = node.name;
-            repository.readme = node.object?.text
+            repository.readmeMd = node?.readmeMd?.text
+            repository.readmeRst = node?.readmeRst?.text
             repository.license = node.licenseInfo
             repository.commitsCount = node.ref?.target?.history?.totalCount
             repository.commits = node.ref?.target?.history?.edges
@@ -41,6 +46,7 @@ export class RepositoryService {
             repository.contributors = contributors.map((contributor) => ({ name: contributor.login, commits: contributor.contributions }) )
             return repository;
         }))
+        console.log(repositoriesArray)
         return repositoriesArray
     }
 
@@ -49,6 +55,11 @@ export class RepositoryService {
         if (rawData?.data?.errors?.length) {
             return []
         };
-        return rawData?.data.repositoryOwner.pinnedItems.nodes
+        console.log(rawData);
+        return rawData?.data?.repositoryOwner.pinnedItems.nodes
+    }
+
+    public selectRepository(repository: IRepository) {
+        this.selectedRepository$.next(repository);
     }
 }
