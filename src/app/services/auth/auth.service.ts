@@ -2,12 +2,12 @@ import { Injectable, Inject } from '@angular/core';
 import { RequesterService } from '../requester.service';
 import { UserModel } from '../../models/user.model';
 import { tap } from 'rxjs/operators';
-import { API, ENDPOINTS } from '../../constants/endpoints';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 
 import * as jwt_decode from 'jwt-decode';
 import { CookieService } from 'ngx-cookie-service';
+import { LOCAL_API } from '../../constants/endpoints';
 
 
 @Injectable({
@@ -30,14 +30,14 @@ export class AuthService {
 
     public registerUser(user: UserModel) {
         return this.requester.post(
-            `${API.ROOT}${ENDPOINTS.USER_REGISTER}`,
+            `${LOCAL_API.ROOT}${LOCAL_API.USER_REGISTER}`,
             user
         );
     }
 
     public loginUser(user: UserModel) {
         return this.requester.post(
-            `${API.ROOT}${ENDPOINTS.USER_LOGIN}`,
+            `${LOCAL_API.ROOT}${LOCAL_API.USER_LOGIN}`,
             user,
             { withCredentials: true }
         ).pipe(

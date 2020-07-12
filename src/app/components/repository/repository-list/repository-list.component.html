@@ -27,9 +27,17 @@
                     <clr-dg-cell>{{repository?.name}}</clr-dg-cell>
                     <clr-dg-cell>{{repository?.license?.name}}</clr-dg-cell>
                     <clr-dg-cell>{{repository?.commitsCount}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository?.contributors}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository?.releases.join('; \n')}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository?.branches}}</clr-dg-cell>
+                    <clr-dg-cell>
+                         <span class="label" *ngFor="let contributor of repository?.contributors">{{ contributor.name }}
+                             <span class="badge">{{contributor.commits}}</span>
+                         </span> 
+                    </clr-dg-cell>
+                    <clr-dg-cell>
+                        <span class="label" *ngFor="let release of repository?.releases">{{ release }}</span> 
+                    </clr-dg-cell>
+                    <clr-dg-cell>
+                        <span class="label" *ngFor="let branch of repository?.branches">{{ branch }}</span> 
+                    </clr-dg-cell>
             </clr-dg-row>
 
             <clr-dg-footer>

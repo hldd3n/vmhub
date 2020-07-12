@@ -13,9 +13,16 @@ export class RequesterService {
 
     public post(
         url: string,
-        body: any,
+        body?: any,
         options?,
     ): Observable<any> {
         return this.http.post<any>( url, body, options );
+    }
+
+    public get(
+        url: string,
+        options?,
+    ): Observable<any> {
+        return this.http.get<any>( url, options );
     }
 }
