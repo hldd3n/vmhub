@@ -27,8 +27,8 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
         this.repositories = await this.repositoryService.getRepositories()
     }
 
-    public handleRowClick(repository): void {
-        console.log(repository.name);
-        this.router.navigate(['repositories', `${repository.name}`, {state: {data: {repository}}}])
+    public handleRowClick(repository: IRepository): void {
+        this.repositoryService.selectRepository(repository)
+        this.router.navigate(['vmware', 'repositories', `${repository.name}`])
     }
 }

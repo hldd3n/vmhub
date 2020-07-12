@@ -1,14 +1,23 @@
 <div class="repository-details">
     <div class="repository-details__actions">
         <p>Pinned repositories</p>
-        <button class="btn btn-sm">Back to pinned repos</button>
+        <button class="btn btn-sm" (click)=handleBack()>Back to pinned repos</button>
     </div>
     <div class="repository-details__tabs">
         <clr-tabs>
             <clr-tab>
                 <button clrTabLink id="link1">Details</button>
                 <clr-tab-content *clrIfActive>
-                    dabadaba
+                    <div class="card">
+                        <div class="card-header">
+                            {{repositoryData.name}} Readme
+                        </div>
+                        <div class="card-block">
+                            <div class="card-text" *ngIf="repositoryData.readmeMd"[innerHTML]="repositoryData.readmeMd | marked"></div>
+                            <div class="card-text" *ngIf="repositoryData.readmeRst"[innerHTML]="repositoryData.readmeRst | restructured"></div>
+                        </div>
+                    </div>
+
                 </clr-tab-content>
             </clr-tab>
             <clr-tab>

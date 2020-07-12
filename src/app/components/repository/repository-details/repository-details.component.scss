@@ -3,6 +3,10 @@ $module: 'repository-details';
 .#{$module} {
     margin-left: 1.2rem;
 
+    .card {
+        margin-bottom: 1.2rem;
+    }
+
     &__actions {
         margin-top: 1.2rem;
         display: flex;
