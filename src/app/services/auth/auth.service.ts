@@ -42,7 +42,6 @@ export class AuthService {
             { withCredentials: true }
         ).pipe(
             tap((response) => {
-                console.log(response);
             })
         );
     }

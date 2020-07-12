@@ -2,42 +2,41 @@
     <div class="repository-list__pinned-repos-datagrid">
         <p>Pinned repositories</p>
         <clr-datagrid>
-            <clr-dg-column
-                [clrDgField]="'name'">Name
+            <clr-dg-column [clrDgField]="'name'">Name
             </clr-dg-column>
-            <clr-dg-column
-                [clrDgField]="'license'">License
+            <clr-dg-column [clrDgField]="'license'">License
             </clr-dg-column>
-            <clr-dg-column
-                [clrDgField]="'commits'">Commits
+            <clr-dg-column [clrDgField]="'commits'">Commits
             </clr-dg-column>
-            <clr-dg-column
-                [clrDgField]="'contributors'">Contributors
+            <clr-dg-column [clrDgField]="'contributors'">Contributors
             </clr-dg-column>
-            <clr-dg-column
-                [clrDgField]="'releases'">Releases
+            <clr-dg-column [clrDgField]="'releases'">Releases
             </clr-dg-column>
-            <clr-dg-column
-                [clrDgField]="'branches'">Branches
+            <clr-dg-column [clrDgField]="'branches'">Branches
             </clr-dg-column>
 
-            <clr-dg-row 
-                *clrDgItems="let repository of repositories"
-                (click)=handleRowClick(repository)>
-                    <clr-dg-cell>{{repository?.name}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository?.license?.name}}</clr-dg-cell>
-                    <clr-dg-cell>{{repository?.commitsCount}}</clr-dg-cell>
-                    <clr-dg-cell>
-                         <span class="label" *ngFor="let contributor of repository?.contributors">{{ contributor.name }}
-                             <span class="badge">{{contributor.commits}}</span>
-                         </span> 
-                    </clr-dg-cell>
-                    <clr-dg-cell>
-                        <span class="label" *ngFor="let release of repository?.releases">{{ release }}</span> 
-                    </clr-dg-cell>
-                    <clr-dg-cell>
-                        <span class="label" *ngFor="let branch of repository?.branches">{{ branch }}</span> 
-                    </clr-dg-cell>
+            <clr-dg-row *clrDgItems="let repository of repositories" (click)=handleRowClick(repository)>
+                <clr-dg-cell>{{repository?.name}}</clr-dg-cell>
+                <clr-dg-cell>{{repository?.license?.name || "None"}}
+                    <clr-tooltip *ngIf="repository?.license?.description">
+                        <clr-icon clrTooltipTrigger shape="info-circle" size="24"></clr-icon>
+                        <clr-tooltip-content clrPosition="top-right" clrSize="lg" *clrIfOpen>
+                            <span>{{repository?.license?.description }}</span>
+                        </clr-tooltip-content>
+                    </clr-tooltip>
+                </clr-dg-cell>
+                <clr-dg-cell>{{repository?.commitsCount}}</clr-dg-cell>
+                <clr-dg-cell>
+                    <span class="label" *ngFor="let contributor of repository?.contributors">{{ contributor.name }}
+                        <span class="badge">{{contributor.commits}}</span>
+                    </span>
+                </clr-dg-cell>
+                <clr-dg-cell>
+                    <span class="label" *ngFor="let release of repository?.releases">{{ release }}</span>
+                </clr-dg-cell>
+                <clr-dg-cell>
+                    <span class="label" *ngFor="let branch of repository?.branches">{{ branch }}</span>
+                </clr-dg-cell>
             </clr-dg-row>
 
             <clr-dg-footer>

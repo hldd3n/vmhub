@@ -16,7 +16,6 @@ export class AuthRouteActivatorService implements CanActivate {
         return this.authService.isAuthenticated$.pipe(
             tap((isLogged: boolean) => {
                 if (!isLogged) {
-                    console.log('NOT LOGGED IN')
                     this.router.navigate(['']);
                 }
             })

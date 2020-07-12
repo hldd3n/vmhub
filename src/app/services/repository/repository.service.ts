@@ -32,7 +32,7 @@ export class RepositoryService {
                     commit.message = rawCommit?.node?.messageHeadline;
                     commit.date = rawCommit?.node?.pushedDate
                     commit.contributor = rawCommit?.node?.committer?.user?.login
-                    commit.resourcePath = rawCommit?.node?.resourcePath
+                    commit.sha = rawCommit?.node?.oid
 
                     return commit
                 })
@@ -46,7 +46,6 @@ export class RepositoryService {
             repository.contributors = contributors.map((contributor) => ({ name: contributor.login, commits: contributor.contributions }) )
             return repository;
         }))
-        console.log(repositoriesArray)
         return repositoriesArray
     }
 
@@ -55,7 +54,6 @@ export class RepositoryService {
         if (rawData?.data?.errors?.length) {
             return []
         };
-        console.log(rawData);
         return rawData?.data?.repositoryOwner.pinnedItems.nodes
     }
 

@@ -21,8 +21,13 @@ export class RequesterService {
 
     public get(
         url: string,
-        options?,
     ): Observable<any> {
-        return this.http.get<any>( url, options );
+        return this.http.get<any>( url );
+    }
+
+    public download(url: string): Observable<Blob> {
+        return this.http.get(url, {
+            responseType: 'blob'
+        })
     }
 }

@@ -24,5 +24,5 @@ export interface IRepositoryCommit {
     message: string,
     date: string,
     contributor: string,
-    resourcePath: string,
+    sha: string,
 }

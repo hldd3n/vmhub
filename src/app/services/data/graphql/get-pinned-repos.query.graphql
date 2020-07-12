@@ -47,7 +47,7 @@ query getPinnedRepositories(
                                                         login
                                                     }
                                                 }
-                                                resourcePath,
+                                                oid
                                             }
                                         }
                                     }

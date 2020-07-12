@@ -5,6 +5,8 @@ import { takeUntil } from 'rxjs/operators';
 import { IRepository } from '../../../common/interfaces/repository.interface';
 import { Router } from '@angular/router';
 import { GITHUB } from '../../../constants/endpoints';
+import { RequesterService } from '../../../services/requester.service';
+import { saveAs } from 'file-saver';
 
 @Component({
     selector: 'app-repository-details',
@@ -14,9 +16,9 @@ import { GITHUB } from '../../../constants/endpoints';
 export class RepositoryDetailsComponent extends SubscribedComponent implements OnInit {
 
     public repositoryData: IRepository
-
     constructor(
         private readonly repositoryService: RepositoryService,
+        private readonly requester: RequesterService,
         private readonly router: Router,
     ) {
         super()
@@ -27,14 +29,15 @@ export class RepositoryDetailsComponent extends SubscribedComponent implements O
             .selectedRepository$
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe((repository) => {
-                console.log('subRepo', repository);
                 this.repositoryData = repository;
             });
     }
 
-    handleDownloadPatch(commitResourcePath: string): void {
-        const url = `${GITHUB.DOMAIN}/${commitResourcePath}.patch`
-        window.open(url)
+    handleDownloadPatch(sha: string): void {
+        const url = `${GITHUB.API}/repos/vmware/${this.repositoryData.name}/commits/${sha}`
+        this.requester
+            .download(url)
+            .subscribe(blob => saveAs(blob, `${sha}.txt`))
     }
 
     handleBack(): void {
