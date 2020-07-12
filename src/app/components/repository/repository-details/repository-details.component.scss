@@ -2,6 +2,7 @@ $module: 'repository-details';
 
 .#{$module} {
     margin-left: 1.2rem;
+    margin-right: 1.2rem;
 
     .card {
         margin-bottom: 1.2rem;
@@ -13,6 +14,8 @@ $module: 'repository-details';
         align-items: center;
 
         p {
+            text-transform: uppercase;
+            text-shadow: 0.05rem 0.05rem;
             margin: 0;
         }
 

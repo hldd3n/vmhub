@@ -4,6 +4,7 @@ import { SubscribedComponent } from '../../shared/subscribed.component';
 import { takeUntil } from 'rxjs/operators';
 import { IRepository } from '../../../common/interfaces/repository.interface';
 import { Router } from '@angular/router';
+import { GITHUB } from '../../../constants/endpoints';
 
 @Component({
     selector: 'app-repository-details',
@@ -29,6 +30,11 @@ export class RepositoryDetailsComponent extends SubscribedComponent implements O
                 console.log('subRepo', repository);
                 this.repositoryData = repository;
             });
+    }
+
+    handleDownloadPatch(commitResourcePath: string): void {
+        const url = `${GITHUB.DOMAIN}/${commitResourcePath}.patch`
+        window.open(url)
     }
 
     handleBack(): void {

@@ -3,7 +3,7 @@ import { GraphqlService } from './base/graphql.service';
 import { Observable } from 'rxjs';
 import { getPinnedRepositories } from './graphql';
 import { RequesterService } from '../requester.service';
-import { GITHUB_API } from '../../constants/endpoints';
+import { GITHUB } from '../../constants/endpoints';
 
 @Injectable()
 export class RepositoryDataService {
@@ -17,7 +17,7 @@ export class RepositoryDataService {
     }
 
     public getContributorsPerRepo(ownerName, repoName: string) {
-        const url = `${GITHUB_API.ROOT}/repos/${ownerName}/${repoName}/contributors?q=contributions&order=desc?&per_page=5&page=1`
+        const url = `${GITHUB.API}/repos/${ownerName}/${repoName}/contributors?q=contributions&order=desc?&per_page=5&page=1`
         return this.requesterService.get(url);
     }
 }

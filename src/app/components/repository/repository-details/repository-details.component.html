@@ -1,6 +1,6 @@
 <div class="repository-details">
     <div class="repository-details__actions">
-        <p>Pinned repositories</p>
+        <p>{{ repositoryData.name }}<p>
         <button class="btn btn-sm" (click)=handleBack()>Back to pinned repos</button>
     </div>
     <div class="repository-details__tabs">
@@ -13,8 +13,8 @@
                             {{repositoryData.name}} Readme
                         </div>
                         <div class="card-block">
-                            <div class="card-text" *ngIf="repositoryData.readmeMd"[innerHTML]="repositoryData.readmeMd | marked"></div>
-                            <div class="card-text" *ngIf="repositoryData.readmeRst"[innerHTML]="repositoryData.readmeRst | restructured"></div>
+                            <div class="card-text" *ngIf="repositoryData?.readmeMd"[innerHTML]="repositoryData.readmeMd | marked"></div>
+                            <div class="card-text" *ngIf="repositoryData?.readmeRst"[innerHTML]="repositoryData.readmeRst | restructured"></div>
                         </div>
                     </div>
 
@@ -23,7 +23,35 @@
             <clr-tab>
                 <button clrTabLink>Commits</button>
                 <clr-tab-content *clrIfActive>
-                    yesPleazzzE
+                    <clr-datagrid>
+                        <clr-dg-column
+                            [clrDgField]="'comment'">Comment
+                        </clr-dg-column>
+                        <clr-dg-column
+                            [clrDgField]="'Date'">Date
+                        </clr-dg-column>
+                        <clr-dg-column
+                            [clrDgField]="'Contributor'">Contributor
+                        </clr-dg-column>
+                        <clr-dg-column
+                            [clrDgField]="'Download patch'">Download patch
+                        </clr-dg-column>
+                        <clr-dg-row 
+                            *clrDgItems="let commit of repositoryData.commits">
+                                <clr-dg-cell>{{commit?.message}}</clr-dg-cell>
+                                <clr-dg-cell>{{commit?.date}}</clr-dg-cell>
+                                <clr-dg-cell>{{commit?.contributor}}</clr-dg-cell>
+                                <clr-dg-cell>
+                                    <button class="btn btn-sm" (click)=handleDownloadPatch(commit.resourcePath)>Download Patch</button>
+                                </clr-dg-cell>
+                        </clr-dg-row>
+            
+                        <clr-dg-footer>
+                            <clr-dg-pagination #pagination [clrDgPageSize]="10">
+                                <clr-dg-page-size [clrPageSizeOptions]="[10,20,50,100]">Commits per page</clr-dg-page-size>
+                            </clr-dg-pagination>
+                        </clr-dg-footer>
+                    </clr-datagrid>
                 </clr-tab-content>
             </clr-tab>
         </clr-tabs>

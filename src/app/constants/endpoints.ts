@@ -4,7 +4,8 @@ export const LOCAL_API = {
     USER_LOGIN: '/users/login'
 };
 
-export const GITHUB_API = {
-    ROOT: 'https://api.github.com',
+export const GITHUB = {
+    DOMAIN: 'https://github.com',
+    API: 'https://api.github.com',
     GRAPHQL: '/graphql'
 }
