@@ -4,14 +4,22 @@
             <clr-input-container>
                 <label class="clr-sr-only">Username</label>
                 <input formControlName="username" type="text" name="username" clrInput placeholder="Username"/>
+                <clr-control-error *clrIfError="'required'">Username is required!</clr-control-error>
+                <clr-control-error *clrIfError="'minlength'">Username should be longer than 6 symbols!</clr-control-error>
+
             </clr-input-container>
             <clr-password-container>
                 <label class="clr-sr-only">Password</label>
                 <input formControlName="password" type="password" name="password" clrPassword placeholder="Password"/>
+                <clr-control-error *clrIfError="'required'">Password is required!</clr-control-error>
+                <clr-control-error *clrIfError="'pattern'">Password should be between 6 and 16 symbols long!</clr-control-error>
+                <clr-control-error *clrIfError="'pattern'">Password should contain at least one digit, one capital and one small letter!</clr-control-error>
             </clr-password-container>
             <clr-password-container>
                 <label class="clr-sr-only">Confirm Password</label>
-                <input formControlName="confirmPassword" type="password" name="confirm password" clrPassword placeholder="Confirm Password"/>
+                <input formControlName="confirmPassword" type="password" name="confirm password" clrPassword placeholder="Confirm Password"/>    
+                <clr-control-error *clrIfError="'required'">Confirm Password is required!</clr-control-error>
+                <clr-control-error *clrIfError="'notMatching'">Passwords do not match!</clr-control-error>
             </clr-password-container>
             <button class="btn btn-primary" (click)="this.register()">register</button>
         </div>
