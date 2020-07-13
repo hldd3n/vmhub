@@ -4,6 +4,7 @@ import { RepositoryService, } from '../../../services/repository/repository.serv
 import { SubscribedComponent } from '../../shared/subscribed.component';
 import { ClrDatagridSortOrder } from '@clr/angular';
 import { IRepository } from '../../../common/interfaces/repository.interface';
+import { tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-repository-list',
@@ -23,13 +24,13 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
         super()
      }
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(): void {
         this.repositoryService.getRepositories('vmware')
+            .pipe(tap((repos) => console.log(repos)))
             .subscribe((repositories) => this.repositories = repositories)
     }
 
     public handleRowClick(repository: IRepository): void {
-        this.repositoryService.selectRepository(repository)
         this.router.navigate(['vmware', 'repositories', `${repository.name}`])
     }
 }

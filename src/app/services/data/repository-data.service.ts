@@ -17,7 +17,6 @@ export class RepositoryDataService {
     }
 
     public getRepositoryByName(reponame: string): Observable<any> {
-        console.log(name);
         return this.graphqlService.query(getRepositoryByName, { reponame })
     }
 
