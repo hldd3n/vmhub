@@ -24,7 +24,8 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
      }
 
     async ngOnInit(): Promise<void> {
-        this.repositories = await this.repositoryService.getRepositories()
+        this.repositoryService.getRepositories('vmware')
+            .subscribe((repositories) => this.repositories = repositories)
     }
 
     public handleRowClick(repository: IRepository): void {

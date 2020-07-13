@@ -1,0 +1,44 @@
+query getRepositoryByName(
+    $reponame: String!,
+    $login: String = "vmware",
+    $readmeMdExpression: String = "master:README.md"
+    $readmeRstExpression: String = "master:README.rst"
+    $commitsTarget: String = "master"
+    $commitsCouont: Int = 100,
+    ) {
+    repositoryOwner(login: $login) {
+        repository(name: $reponame) {
+            readmeMd: object(expression: $readmeMdExpression) {
+                ... on Blob {
+                text
+                }
+            }
+            readmeRst: object(expression: $readmeRstExpression) {
+                ... on Blob {
+                text
+                }
+            }
+            name,
+            ref(qualifiedName: $commitsTarget) {
+                target {
+                    ... on Commit {
+                        history(first: $commitsCouont) {
+                            edges {
+                                node {
+                                    messageHeadline,
+                                    pushedDate,
+                                    committer {
+                                        user {
+                                            login
+                                        }
+                                    }
+                                    oid
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }        
+    }
+}

@@ -10,9 +10,7 @@
                 <button clrTabLink id="link1">Details</button>
                 <clr-tab-content *clrIfActive>
                     <div class="card">
-                        <div class="card-header">
-                            {{repositoryData.name}} Readme
-                        </div>
+                        <div class="card-header">Readme</div>
                         <div class="card-block">
                             <div class="card-text" *ngIf="repositoryData?.readmeMd"
                                 [innerHTML]="repositoryData.readmeMd | marked"></div>

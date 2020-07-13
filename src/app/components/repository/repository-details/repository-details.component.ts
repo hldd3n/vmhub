@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RepositoryService } from '../../../services/repository/repository.service';
 import { SubscribedComponent } from '../../shared/subscribed.component';
 import { takeUntil } from 'rxjs/operators';
-import { IRepository } from '../../../common/interfaces/repository.interface';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { GITHUB } from '../../../constants/endpoints';
 import { RequesterService } from '../../../services/requester.service';
 import { saveAs } from 'file-saver';
+import { IRepository } from '../../../common/interfaces/repository.interface';
+import { AuthRouteActivatorService } from '../../../services/guards/auth-route-activator.service';
 
 @Component({
     selector: 'app-repository-details',
@@ -26,11 +27,9 @@ export class RepositoryDetailsComponent extends SubscribedComponent implements O
 
     ngOnInit(): void {
         this.repositoryService
-            .selectedRepository$
+            .getRepositoryByName(this.router.url.split('/').pop())
             .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe((repository) => {
-                this.repositoryData = repository;
-            });
+            .subscribe((repository) => this.repositoryData = repository)
     }
 
     handleDownloadPatch(sha: string): void {

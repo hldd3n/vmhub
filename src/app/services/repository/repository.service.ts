@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { RepositoryDataService } from '../data/repository-data.service';
-import { IRepositoryCommit, IRepository } from '../../common/interfaces/repository.interface';
 import { IRepositoryRawData, IRawCommit, IRawName } from '../../common/interfaces/repository-raw.interface';
-import { Subject, ReplaySubject } from 'rxjs';
+import { Subject, ReplaySubject, Observable } from 'rxjs';
+import { RepositoryDataService } from '../data/repository-data.service';
+import { IRepository, IRepositoryCommit } from '../../common/interfaces/repository.interface';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class RepositoryService {
@@ -12,14 +13,71 @@ export class RepositoryService {
 
     public readonly selectedRepository$ = new ReplaySubject<IRepository>(1)
 
-    public async getRepositories(): Promise<IRepository[]> {
-        const repositoriesRaw = await this.getRawRepositories()
+    public getRepositories(name: string): Observable<IRepository[]> {
+        return this.getRawRepositories(name).pipe(
+            map((rawData) => {
+                const repositoriesRaw = rawData?.data?.repositoryOwner.pinnedItems.nodes
+                if (!repositoriesRaw.length) {
+                    return []
+                }
+                const repositoriesWithoutContributors: IRepository[] = this.mapRepositoriesData(repositoriesRaw)
 
-        if (!repositoriesRaw.length) {
+                return repositoriesWithoutContributors
+            }),
+        )
+    }
+
+    public getRepositoryByName(name: string): Observable<IRepository> {
+        return this.getRawRepositoryByName(name).pipe(
+            map((rawData) => {
+                if (rawData?.data?.errors?.length) {
+                    return null
+                };
+                console.log(rawData);
+                const repositoryRaw = rawData?.data?.repositoryOwner?.repository
+                const repository: IRepository = {} as IRepository;
+                repository.name = repositoryRaw.name;
+                repository.readmeMd = repositoryRaw?.readmeMd?.text
+                repository.readmeRst = repositoryRaw?.readmeRst?.text
+                repository.commits = repositoryRaw.ref?.target?.history?.edges
+                    .map((rawCommit: IRawCommit) => {
+                        const commit: IRepositoryCommit = {} as IRepositoryCommit
+                        commit.message = rawCommit?.node?.messageHeadline;
+                        commit.date = rawCommit?.node?.pushedDate
+                        commit.contributor = rawCommit?.node?.committer?.user?.login
+                        commit.sha = rawCommit?.node?.oid
+
+                        return commit
+                    })
+
+                return repository;
+            }),
+        )
+    }
+
+    public getRawRepositories(name: string): Observable<any> {
+        return this.repositoryDataService.getPinnedRepositoriesRawData(name)
+    }
+
+    public async getRawRepositoryByName1(name: string): Promise<any> {
+        return this.repositoryDataService.getRepositoryByName(name).toPromise();
+        const rawData = await this.repositoryDataService.getRepositoryByName('clarity').toPromise();
+        if (rawData?.data?.errors?.length) {
             return []
-        }
+        };
+        return rawData?.data?.repositoryOwner?.repository
+    }
 
-        const repositoriesWithoutContributors: IRepository[] = repositoriesRaw.map((node: IRepositoryRawData) => {
+    public getRawRepositoryByName(name: string): Observable<any> {
+        return this.repositoryDataService.getRepositoryByName(name)
+    }
+
+    public selectRepository(repository: IRepository) {
+        this.selectedRepository$.next(repository);
+    }
+
+    private mapRepositoriesData(rawRepositories: IRepositoryRawData[]): IRepository[] {
+        return rawRepositories.map((node: IRepositoryRawData) => {
             const repository: IRepository = {} as IRepository;
             repository.name = node.name;
             repository.readmeMd = node?.readmeMd?.text
@@ -40,24 +98,5 @@ export class RepositoryService {
             repository.branches = node.refs.nodes.map((rawBranch: IRawName) => rawBranch.name)
             return repository;
         });
-
-        const repositoriesArray = await Promise.all(repositoriesWithoutContributors.map(async (repository: IRepository) => {
-            const contributors = await this.repositoryDataService.getContributorsPerRepo('vmware', repository.name).toPromise();
-            repository.contributors = contributors.map((contributor) => ({ name: contributor.login, commits: contributor.contributions }) )
-            return repository;
-        }))
-        return repositoriesArray
-    }
-
-    public async getRawRepositories(): Promise<any> {
-        const rawData = await this.repositoryDataService.getPinnedRepositoriesRawData('vmware').toPromise();
-        if (rawData?.data?.errors?.length) {
-            return []
-        };
-        return rawData?.data?.repositoryOwner.pinnedItems.nodes
-    }
-
-    public selectRepository(repository: IRepository) {
-        this.selectedRepository$.next(repository);
     }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GraphqlService } from './base/graphql.service';
 import { Observable } from 'rxjs';
-import { getPinnedRepositories } from './graphql';
+import { getPinnedRepositories, getRepositoryByName } from './graphql';
 import { RequesterService } from '../requester.service';
 import { GITHUB } from '../../constants/endpoints';
 
@@ -14,6 +14,11 @@ export class RepositoryDataService {
 
     public getPinnedRepositoriesRawData(login: string): Observable<any> {
         return this.graphqlService.query(getPinnedRepositories, { login });
+    }
+
+    public getRepositoryByName(reponame: string): Observable<any> {
+        console.log(name);
+        return this.graphqlService.query(getRepositoryByName, { reponame })
     }
 
     public getContributorsPerRepo(ownerName, repoName: string) {
