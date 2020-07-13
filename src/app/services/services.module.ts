@@ -8,6 +8,7 @@ import { RepositoryDetailsComponent } from '../components/repository/repository-
 import { RepositoryDataService } from './data/repository-data.service';
 import { GraphqlService } from './data/base/graphql.service';
 import { AuthRouteActivatorService } from './guards/auth-route-activator.service';
+import { SpinnerHttpInterceptor } from './interceptors/spinner-interceptor.service';
 
 @NgModule({
     imports: [],
@@ -19,6 +20,7 @@ import { AuthRouteActivatorService } from './guards/auth-route-activator.service
         RequesterService,
         RepositoryDetailsComponent,
         AuthRouteActivatorService,
+        SpinnerHttpInterceptor,
         GraphqlService,
     ]
 })

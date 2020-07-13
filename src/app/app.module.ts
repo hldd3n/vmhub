@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './common/shared.module';
 import { ComponentsModule } from './components/components.module';
 import { GraphQLModule } from './graphql.module';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { CookieService } from 'ngx-cookie-service';
 import { RegisterComponent } from './components/register/register.component';
+import { SpinnerHttpInterceptor } from './services/interceptors/spinner-interceptor.service';
 
 @NgModule({
     declarations: [
@@ -53,8 +54,13 @@ import { RegisterComponent } from './components/register/register.component';
                 },
             }),
             deps: [HttpLink, CookieService],
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: SpinnerHttpInterceptor,
+            multi: true
         }
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
