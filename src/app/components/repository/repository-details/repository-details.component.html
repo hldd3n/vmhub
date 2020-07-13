@@ -2,7 +2,7 @@
     <div class="repository-details__actions">
         <p>{{ repositoryData?.name }}
         </p>
-            <button class="btn btn-sm" (click)=handleBack()>Back to pinned repos</button>
+        <button class="btn btn-sm" (click)=handleBack()>Back to pinned repos</button>
     </div>
     <div class="repository-details__tabs">
         <clr-tabs>
@@ -38,7 +38,7 @@
                             <clr-dg-cell>{{(commit?.date | date:'medium') || "unknown"}}</clr-dg-cell>
                             <clr-dg-cell>{{commit?.contributor}}</clr-dg-cell>
                             <clr-dg-cell>
-                                    <button class="btn btn-sm" (click)=handleDownloadPatch(commit.sha)>Download</button>
+                                <button class="btn btn-primary btn-sm" (click)=handleDownloadPatch(commit.sha)>Download</button>
                             </clr-dg-cell>
                         </clr-dg-row>
 

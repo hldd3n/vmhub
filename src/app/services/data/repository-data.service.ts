@@ -7,7 +7,7 @@ import { GITHUB } from '../../constants/endpoints';
 
 @Injectable()
 export class RepositoryDataService {
-    constructor (
+    constructor(
         private readonly graphqlService: GraphqlService,
         private readonly requesterService: RequesterService,
     ) { }

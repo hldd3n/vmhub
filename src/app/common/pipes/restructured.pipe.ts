@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as rst2html from 'rst2html';
 
-
 @Pipe({
     name: 'restructured'
 })

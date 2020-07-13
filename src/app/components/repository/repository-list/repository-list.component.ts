@@ -22,7 +22,7 @@ export class RepositoryListComponent extends SubscribedComponent implements OnIn
         private _activatedRoute: ActivatedRoute,
     ) {
         super()
-     }
+    }
 
     ngOnInit(): void {
         this.repositoryService.getRepositories('vmware')

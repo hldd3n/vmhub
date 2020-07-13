@@ -6,20 +6,16 @@ import { RepositoryListComponent } from './repository/repository-list/repository
 import { RepositoryDetailsComponent } from './repository/repository-details/repository-details.component';
 import { ComponentsRoutingModule } from './components-routing.module';
 import { HeaderComponent } from './header/header.component';
-import { RepositoryCommitsComponent } from './repository/repository-commits/repository-commits.component';
 import { ServicesModule } from '../services/services.module';
 import { SubscribedComponent } from './shared/subscribed.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
-
-
 
 @NgModule({
     declarations: [
         RepositoryListComponent,
         RepositoryDetailsComponent,
         HeaderComponent,
-        RepositoryCommitsComponent,
         SubscribedComponent,
     ],
     imports: [
