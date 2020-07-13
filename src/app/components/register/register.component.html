@@ -1,5 +1,5 @@
 <div class="login-wrapper">
-    <form clrForm [formGroup]="loginForm" class="login">
+    <form clrForm [formGroup]="registerForm" class="login">
         <div class="login-group">
             <clr-input-container>
                 <label class="clr-sr-only">Username</label>
@@ -9,8 +9,11 @@
                 <label class="clr-sr-only">Password</label>
                 <input formControlName="password" type="password" name="password" clrPassword placeholder="Password"/>
             </clr-password-container>
-            <button class="btn btn-primary" (click)="this.login()">LOGIN</button>
-            <a (click)="this.signup()" class="signup">Sign up for a Company ID</a>
+            <clr-password-container>
+                <label class="clr-sr-only">Confirm Password</label>
+                <input formControlName="confirmPassword" type="password" name="confirm password" clrPassword placeholder="Confirm Password"/>
+            </clr-password-container>
+            <button class="btn btn-primary" (click)="this.register()">register</button>
         </div>
     </form>
 </div>

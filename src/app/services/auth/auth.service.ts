@@ -40,10 +40,7 @@ export class AuthService {
             `${LOCAL_API.ROOT}${LOCAL_API.USER_LOGIN}`,
             user,
             { withCredentials: true }
-        ).pipe(
-            tap((response) => {
-            })
-        );
+        )
     }
 
     public logout(): void {

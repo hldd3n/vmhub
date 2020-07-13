@@ -10,6 +10,7 @@ import { RepositoryCommitsComponent } from './repository/repository-commits/repo
 import { ServicesModule } from '../services/services.module';
 import { SubscribedComponent } from './shared/subscribed.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 
 
 

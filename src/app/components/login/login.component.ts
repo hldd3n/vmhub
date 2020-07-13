@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -24,9 +24,13 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    public login() {
+    public login(): void {
         this.authService.loginUser(this.loginForm.value).subscribe(
             (result) => document.location.href = result.redirectUrl
         )
+    }
+
+    public signup(): void {
+        this.router.navigate(['register'])
     }
 }
