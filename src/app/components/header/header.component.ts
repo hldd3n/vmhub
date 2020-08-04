@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
-import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
     selector: 'app-header',
@@ -12,9 +11,8 @@ export class HeaderComponent implements OnInit {
 
     public username: string;
     constructor(
-        public spinnerService: SpinnerService,
         private readonly authService: AuthService,
-        private readonly router: Router
+        private readonly router: Router,
     ) { }
 
     ngOnInit(): void {

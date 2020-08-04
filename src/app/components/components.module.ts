@@ -10,7 +10,6 @@ import { ServicesModule } from '../services/services.module';
 import { SubscribedComponent } from './shared/subscribed.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +17,6 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
         RepositoryDetailsComponent,
         HeaderComponent,
         SubscribedComponent,
-        SpinnerComponent,
     ],
     imports: [
         ReactiveFormsModule,
@@ -32,7 +30,6 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
         RepositoryDetailsComponent,
         ComponentsRoutingModule,
         SubscribedComponent,
-        SpinnerComponent,
     ],
 })
 export class ComponentsModule { }

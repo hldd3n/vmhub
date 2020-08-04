@@ -1,7 +1,7 @@
 <div class="repository-list">
     <div class="repository-list__pinned-repos-datagrid">
         <p>Pinned repositories</p>
-        <clr-datagrid>
+        <clr-datagrid [clrDgLoading]="loading">
             <clr-dg-column [clrDgField]="'name'">Name
             </clr-dg-column>
             <clr-dg-column [clrDgField]="'license'">License

@@ -15,7 +15,6 @@ import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { CookieService } from 'ngx-cookie-service';
 import { RegisterComponent } from './components/register/register.component';
-import { SpinnerHttpInterceptor } from './services/interceptors/spinner-interceptor.service';
 
 @NgModule({
     declarations: [
@@ -55,11 +54,6 @@ import { SpinnerHttpInterceptor } from './services/interceptors/spinner-intercep
             }),
             deps: [HttpLink, CookieService],
         },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: SpinnerHttpInterceptor,
-            multi: true
-        }
     ],
     bootstrap: [AppComponent],
 })
