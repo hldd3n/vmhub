@@ -1,25 +1,75 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RepositoryListComponent } from "./repository-list.component"
+import { IRepository } from 'src/app/common/interfaces/repository.interface';
+import { Router } from '@angular/router';
+import { RepositoryService } from 'src/app/services/repository/repository.service';
+import { of } from 'rxjs';
 
-import { RepositoryListComponent } from './repository-list.component';
+const repositoriesFixture = [
+    {
+        name: 'firstRepo',
+        readmeMd: 'justkeepswimming',
+        readmeRst: undefined,
+        license: {
+            name: 'MIT',
+        },
+        contributors: [
+            { name: 'hldd3n', commits: 1 },
+        ],
+        commits: [{
+            message: 'quickfix everything',
+            date: '2015-03-25',
+            contributor: 'hldd3n',
+            sha: 'link'
+        }],
+        commitsCount: 15,
+        releases: ['1.beta'],
+        branches: ['master'],
+    },
+]
 
 describe('RepositoryListComponent', () => {
-  let component: RepositoryListComponent;
-  let fixture: ComponentFixture<RepositoryListComponent>;
+    let component: RepositoryListComponent
+    let repositories: IRepository[];
+    let loading: boolean;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RepositoryListComponent ]
+    let mockRouter;
+    let mockRepositoryService;
+
+    beforeEach(() => {
+        mockRouter = jasmine.createSpyObj(['navigate'])
+        mockRepositoryService = jasmine.createSpyObj(['getRepositories'])
+        
+        component = new RepositoryListComponent(mockRouter, mockRepositoryService);
     })
-    .compileComponents();
-  }));
+    
+    describe('ngOnInit', () => {
+        it('should load the repositories subscribing to repositoryService getRepositories method', () => {
+            // Arrange
+            mockRepositoryService.getRepositories.and.returnValue(of(repositoriesFixture))
+            // Act
+            component.ngOnInit()
+            // Assert
+            expect(component.repositories.length).toBe(1);
+        })
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RepositoryListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        it('should set loading field to false', () => {
+            // Arrange
+            mockRepositoryService.getRepositories.and.returnValue(of(repositoriesFixture))
+            // Act
+            component.ngOnInit()
+            // Assert
+            expect(component.loading).toBe(false);
+        })
+    })
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    describe('handleRowClick', () => {
+        it('should call router navigate method with repository name', () => {
+            // Arrange
+            const testRepository = repositoriesFixture[0];
+            // Act
+            component.handleRowClick(testRepository)
+            // Assert
+            expect(mockRouter.navigate).toHaveBeenCalledWith([jasmine.any(String), jasmine.any(String), `${testRepository.name}`])
+        })
+    })
+})

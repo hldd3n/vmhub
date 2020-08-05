@@ -5,7 +5,7 @@ import { AuthRouteActivatorService } from './services/guards/auth-route-activato
 import { RegisterComponent } from './components/register/register.component';
 
 
-const routes: Routes = [
+export const rootRoutes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: 'login', component: LoginComponent, pathMatch: 'full' },
     { path: 'register', component: RegisterComponent, pathMatch: 'full' },
@@ -22,7 +22,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes)
+        RouterModule.forRoot(rootRoutes)
     ],
     exports: [RouterModule]
 })

@@ -11,8 +11,6 @@ export class RepositoryService {
         private readonly repositoryDataService: RepositoryDataService,
     ) { }
 
-    // public readonly selectedRepository$ = new ReplaySubject<IRepository>(1)
-
     public getRepositories(name: string): Observable<any> {
         return this.getRawRepositories(name).pipe(
             filter((rawData) => rawData?.data?.repositoryOwner?.pinnedItems?.nodes.length),
@@ -20,7 +18,6 @@ export class RepositoryService {
                 const repositoriesRaw = rawData?.data?.repositoryOwner?.pinnedItems?.nodes
 
                 const repositoriesWithoutContributors: IRepository[] = this.mapRepositoriesData(repositoriesRaw)
-
 
                 return combineLatest(repositoriesWithoutContributors.map((repo) => {
                     return this.repositoryDataService.getContributorsPerRepo('vmware', repo.name)

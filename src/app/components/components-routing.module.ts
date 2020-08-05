@@ -4,7 +4,7 @@ import { RepositoryListComponent } from './repository/repository-list/repository
 import { HeaderComponent } from './header/header.component';
 import { RepositoryDetailsComponent } from './repository/repository-details/repository-details.component';
 
-const routes: Routes = [{
+export const routes: Routes = [{
     path: '', component: HeaderComponent,
     children: [{
         path: 'repositories', component: RepositoryListComponent,

@@ -16,7 +16,7 @@ import { LOCAL_API } from '../../constants/endpoints';
 export class AuthService {
 
     private readonly isLoggedInSubject$ = new BehaviorSubject<boolean>(
-        this.hasCookie()
+        this.hasCookies()
     );
 
     constructor(
@@ -49,10 +49,10 @@ export class AuthService {
 
     public getUsername(): string {
         const decodedToken = this.getDecodedToken(this.getCookieValue('X-VMNEST-TOKEN'))
-        return decodedToken.username;
+        return decodedToken?.username;
     }
 
-    private hasCookie() {
+    private hasCookies() {
         const hasLocalCookie = !!this.cookieService.get('X-VMNEST-TOKEN');
         const hasGithubCookie = !!this.cookieService.get('X-GITHUB-TOKEN');
         return hasLocalCookie && hasGithubCookie;

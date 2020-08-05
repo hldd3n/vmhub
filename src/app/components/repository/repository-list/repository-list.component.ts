@@ -1,29 +1,21 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RepositoryService, } from '../../../services/repository/repository.service';
 import { SubscribedComponent } from '../../shared/subscribed.component';
-import { ClrDatagridSortOrder, ClrDatagridStateInterface, ClrDatagridComparatorInterface } from '@clr/angular';
-import { IRepository, IRepositoryLicense, IContributor } from '../../../common/interfaces/repository.interface';
-import { tap } from 'rxjs/operators';
-
-class ContributorComparator implements ClrDatagridComparatorInterface<IContributor> {
-    compare(a: IContributor, b: IContributor) {
-        console.log('CONTRIBB', a, b)
-        return a.commits - b.commits;
-    }
-}
+import { ClrDatagridSortOrder } from '@clr/angular';
+import { IRepository } from '../../../common/interfaces/repository.interface';
+import { takeUntil, filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-repository-list',
     templateUrl: './repository-list.component.html',
     styleUrls: ['./repository-list.component.scss']
 })
-export class RepositoryListComponent extends SubscribedComponent implements AfterViewInit {
+export class RepositoryListComponent extends SubscribedComponent implements OnInit {
 
     public repositories: IRepository[] = []
     public sort = ClrDatagridSortOrder.DESC;
     public loading = true;
-    public contributorComparator = new ContributorComparator();
 
     constructor(
         private readonly router: Router,
@@ -32,9 +24,12 @@ export class RepositoryListComponent extends SubscribedComponent implements Afte
         super()
     }
 
-    ngAfterViewInit(): void {
+    ngOnInit(): void {
         this.repositoryService.getRepositories('vmware')
-            .pipe(tap((repos) => console.log(repos)))
+            .pipe(
+                filter((result) => result !== undefined),
+                takeUntil(this.componentDestroyed$),
+            )
             .subscribe((repositories) => {
                 this.repositories = repositories;
                 this.loading = false;
