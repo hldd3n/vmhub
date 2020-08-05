@@ -25,13 +25,13 @@
                 <button clrTabLink>Commits</button>
                 <clr-tab-content *clrIfActive>
                     <clr-datagrid>
-                        <clr-dg-column [clrDgField]="'comment'">Comment
+                        <clr-dg-column>Comment
                         </clr-dg-column>
-                        <clr-dg-column [clrDgField]="'Date'">Date
+                        <clr-dg-column>Date
                         </clr-dg-column>
-                        <clr-dg-column [clrDgField]="'Contributor'">Contributor
+                        <clr-dg-column>Contributor
                         </clr-dg-column>
-                        <clr-dg-column [clrDgField]="'Download patch'">Download patch
+                        <clr-dg-column>Download patch
                         </clr-dg-column>
                         <clr-dg-row *clrDgItems="let commit of repositoryData.commits">
                             <clr-dg-cell>{{commit?.message}}</clr-dg-cell>
