@@ -49,7 +49,7 @@ export class AuthService {
 
     public getUsername(): string {
         const decodedToken = this.getDecodedToken(this.getCookieValue('X-VMNEST-TOKEN'))
-        return decodedToken?.username;
+        return decodedToken.username;
     }
 
     private hasCookies() {
