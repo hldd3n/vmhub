@@ -33,7 +33,7 @@
         "graphql": "14.6.0",
         "graphql-tag": "2.10.0",
         "jwt-decode": "^2.2.0",
-        "marked": "^1.1.0",
+        "marked": "^2.0.0",
         "ngx-cookie-service": "^3.0.4",
         "prettier": "2.0.5",
         "rst2html": "^1.0.4",
